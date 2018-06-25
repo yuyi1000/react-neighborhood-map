@@ -62,3 +62,36 @@
 .search-filter {
   background-color: limegreen;
 }
+
+@media (min-width: 800px) {
+  .map {
+    display: inline-block;
+    width: 80%;
+    height: 500px;
+    vertical-align: top;
+  }
+
+  .list-locations {
+    display: inline-block;
+    width: 20%;
+    height: 500px;
+    vertical-align: top;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .map {
+    display: inline-block;
+    width: 50%;
+    height: 500px;
+    vertical-align: top;
+  }
+
+  .list-locations {
+    display: inline-block;
+    width: 50%;
+    height: 500px;
+    vertical-align: top;
+  }
+}
