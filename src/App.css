@@ -26,3 +26,39 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.map {
+  display: inline-block;
+  width: 70%;
+  height: 500px;
+  vertical-align: top;
+}
+
+
+.list-locations {
+  display: inline-block;
+  width: 30%;
+  height: 500px;
+  vertical-align: top;
+}
+
+.list-locations ul {
+  padding: 10px;
+  margin: auto;
+}
+
+.list-locations ul li {
+  padding: 3px;
+}
+
+.search-form {
+  margin: 10px;
+}
+
+.search-input {
+
+}
+
+.search-filter {
+  background-color: limegreen;
+}
