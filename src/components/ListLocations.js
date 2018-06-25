@@ -24,6 +24,12 @@ class ListLocations extends Component {
     this.setState({query: event.target.value})
   }
 
+  resetIcons = (mapMarkers, defaultIcon) => {
+    mapMarkers.forEach(mapMarker => {
+      mapMarker.setIcon(defaultIcon)
+    })
+  }
+
   render() {
     const listStyle = {
       width: 180,
@@ -47,8 +53,9 @@ class ListLocations extends Component {
 
         <ul>
           {filteredMapMarkers.map(mapMarker => (
-            <li key={mapMarker.title} onClick={() => populateInfoWindow(mapMarker, infowindow, map)}
-              onMouseOver={() => mapMarker.setIcon(highlightedIcon)} onMouseOut={() => {mapMarker.setIcon(defaultIcon)}} >
+            <li key={mapMarker.title} tabIndex='0' onClick={() => populateInfoWindow(mapMarker, infowindow, map)}
+              onMouseOver={() => mapMarker.setIcon(highlightedIcon)} onMouseOut={() => {mapMarker.setIcon(defaultIcon)}}
+              onFocus={() => {this.resetIcons(mapMarkers, defaultIcon); mapMarker.setIcon(highlightedIcon)}} >
               {mapMarker.title}
             </li>
           ))}
