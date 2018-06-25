@@ -30,6 +30,7 @@ class ListLocations extends Component {
     })
   }
 
+
   render() {
     const listStyle = {
       width: 180,
@@ -55,7 +56,8 @@ class ListLocations extends Component {
           {filteredMapMarkers.map(mapMarker => (
             <li key={mapMarker.title} tabIndex='0' onClick={() => populateInfoWindow(mapMarker, infowindow, map)}
               onMouseOver={() => mapMarker.setIcon(highlightedIcon)} onMouseOut={() => {mapMarker.setIcon(defaultIcon)}}
-              onFocus={() => {this.resetIcons(mapMarkers, defaultIcon); mapMarker.setIcon(highlightedIcon)}} >
+              onFocus={() => {this.resetIcons(mapMarkers, defaultIcon); mapMarker.setIcon(highlightedIcon)}}
+              onKeyPress={(event) => {if (event.key === 'Enter') populateInfoWindow(mapMarker, infowindow, map)}} >
               {mapMarker.title}
             </li>
           ))}
