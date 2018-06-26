@@ -32,8 +32,6 @@ class Map extends Component {
 
   addMarkers = (map, markers, infowindow) => {
 
-    let outerMap = this
-
     // Style the markers a bit. This will be our listing marker icon.
     const defaultIcon = this.makeMarkerIcon('0091ff')
 
@@ -93,7 +91,6 @@ class Map extends Component {
       // do something with data
       const pages = data.query.pages
       extract = pages[Object.keys(pages)[0]].extract
-      console.log(extract)
       const firstParagraph = extract.slice(0, extract.indexOf('</p>') + '</p>'.length)
       // return extract
       // outerMap.addTwoNumber(1, 3)
@@ -104,8 +101,9 @@ class Map extends Component {
 
   fillInfoWindow = (marker, infowindow, map, wikiData) => {
     infowindow.marker = marker
-    console.log('wikiData: ' + wikiData)
-    infowindow.setContent('<div>' + marker.title + '</div>' + '<div>' + wikiData + '</div>')
+    // infowindow.setContent('<div>' + marker.title + '</div>' + '<div>' + wikiData + '</div>')
+    infowindow.setContent(`<div>${marker.title}</div><div>${wikiData}</div>`)
+
     infowindow.open(map, marker)
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
@@ -198,10 +196,7 @@ class Map extends Component {
 
     let map = this.initMap(center)
     let largeInfowindow = new window.google.maps.InfoWindow({maxWidth: 200})
-    console.log(largeInfowindow)
-    console.log(typeof(largeInfowindow))
     this.addMarkers(map, markers, largeInfowindow)
-    console.log(largeInfowindow)
     this.setState({map: map, markers: markers, center: center, infowindow: largeInfowindow})
   }
 
@@ -211,12 +206,6 @@ class Map extends Component {
   }
 
   render() {
-    const mapStyle = {
-      // left: 200,
-      width: 800,
-      height: 500,
-      border: '1px solid black'
-    }
 
     const { map, markers, mapMarkers, infowindow, defaultIcon, highlightedIcon } = this.state
 

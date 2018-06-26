@@ -32,11 +32,6 @@ class ListLocations extends Component {
 
 
   render() {
-    const listStyle = {
-      width: 180,
-      height: 300,
-      border: '1px solid black'
-    }
 
     const { map, markers, mapMarkers, infowindow, defaultIcon, highlightedIcon, addMarkers, hideMarkers, populateInfoWindow } = this.props
     const { query } = this.state
