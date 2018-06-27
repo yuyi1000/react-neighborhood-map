@@ -3,7 +3,6 @@
 
 import React, { Component } from 'react'
 import ListLocations from './ListLocations'
-// import '../App.css'
 
 class Map extends Component {
 
@@ -36,10 +35,8 @@ class Map extends Component {
     const defaultIcon = this.makeMarkerIcon('0091ff')
 
     // Create a "highlighted location" marker color for when the user
-    // mouses over the marker.
+    // mouses over the location name in the list.
     const highlightedIcon = this.makeMarkerIcon('FFFF24')
-
-
     let mapMarkers = []
 
     markers.forEach((marker) => {
@@ -49,27 +46,15 @@ class Map extends Component {
         title: marker.title,
         icon: defaultIcon
       })
-
       mapMarkers.push(m)
 
-      // // Two event listeners - one for mouseover, one for mouseout,
-      // // to change the colors back and forth.
-      // m.addListener('mouseover', function() {
-      //   this.setIcon(highlightedIcon)
-      // })
-      // m.addListener('mouseout', function() {
-      //   this.setIcon(defaultIcon)
-      // })
-      // // Create an onclick event to open the large infowindow at each marker.
-      // m.addListener('click', function() {
-      //   outerMap.populateInfoWindow(m, infowindow, map)
-      // })
     })
     this.setState({mapMarkers: mapMarkers, defaultIcon: defaultIcon, highlightedIcon: highlightedIcon})
 
   }
 
-
+  // fetch data asynchronously from media wiki api with key words of marker.title
+  // if successful, the retrieved data will be put on infowindow
   fetchFromWikipedia = (marker, infowindow, map) => {
     const search = marker.title.split(' ').join('_')
     const url = 'https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
@@ -92,25 +77,21 @@ class Map extends Component {
       const pages = data.query.pages
       extract = pages[Object.keys(pages)[0]].extract
       const firstParagraph = extract.slice(0, extract.indexOf('</p>') + '</p>'.length)
-      // return extract
-      // outerMap.addTwoNumber(1, 3)
       outerMap.fillInfoWindow(marker, infowindow, map, firstParagraph)
     });
   }
 
-
+  // fill infowindow with retrieved wiki data.
   fillInfoWindow = (marker, infowindow, map, wikiData) => {
     infowindow.marker = marker
     // infowindow.setContent('<div>' + marker.title + '</div>' + '<div>' + wikiData + '</div>')
     infowindow.setContent(`<div>${marker.title}</div><div>${wikiData}</div>`)
-
     infowindow.open(map, marker)
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.marker = null
     })
   }
-
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
   // one infowindow which will open at the marker that is clicked, and populate based
@@ -119,17 +100,8 @@ class Map extends Component {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker !== marker) {
       this.fetchFromWikipedia(marker, infowindow, map)
-      // infowindow.marker = marker
-      // console.log('wikiData: ' + wikiData)
-      // infowindow.setContent('<div>' + marker.title + '</div>' + '<div>' + wikiData + '</div>')
-      // infowindow.open(map, marker)
-      // // Make sure the marker property is cleared if the infowindow is closed.
-      // infowindow.addListener('closeclick', function() {
-      //   infowindow.marker = null
-      // })
     }
   }
-
 
   // This function takes in a COLOR, and then creates a new marker
   // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -144,8 +116,6 @@ class Map extends Component {
       new window.google.maps.Size(21,34))
     return markerImage
   }
-
-
 
   initSetup = () => {
     // hard coded center locations here, will be better if retrieved from a server.
@@ -195,9 +165,9 @@ class Map extends Component {
     ]
 
     let map = this.initMap(center)
-    let largeInfowindow = new window.google.maps.InfoWindow({maxWidth: 200})
-    this.addMarkers(map, markers, largeInfowindow)
-    this.setState({map: map, markers: markers, center: center, infowindow: largeInfowindow})
+    let infowindow = new window.google.maps.InfoWindow({maxWidth: 200})
+    this.addMarkers(map, markers, infowindow)
+    this.setState({map: map, markers: markers, center: center, infowindow: infowindow})
   }
 
   componentDidMount() {
@@ -206,9 +176,7 @@ class Map extends Component {
   }
 
   render() {
-
     const { map, markers, mapMarkers, infowindow, defaultIcon, highlightedIcon } = this.state
-
     return (
       <div>
         <ListLocations
@@ -224,7 +192,6 @@ class Map extends Component {
         />
         <div id='map' className='map' ></div>
       </div>
-
     )
   }
 }

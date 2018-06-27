@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-// import '../App.css'
 
 class ListLocations extends Component {
 
@@ -24,29 +23,24 @@ class ListLocations extends Component {
     this.setState({query: event.target.value})
   }
 
+  // reset all markers in the map to default icons.
   resetIcons = (mapMarkers, defaultIcon) => {
     mapMarkers.forEach(mapMarker => {
       mapMarker.setIcon(defaultIcon)
     })
   }
 
-
   render() {
-
     const { map, markers, mapMarkers, infowindow, defaultIcon, highlightedIcon, addMarkers, hideMarkers, populateInfoWindow } = this.props
     const { query } = this.state
-
     const filteredMapMarkers = mapMarkers.filter(mapMarker => mapMarker.title.toUpperCase().includes(query.toUpperCase()))
     const filteredMarkers = markers.filter(marker => marker.title.toUpperCase().includes(query.toUpperCase()))
-
     return (
       <div className='list-locations'>
-        {/* <button onClick={() => hideMarkers(mapMarkers)}>hide markers</button> */}
         <form className='search-form' onSubmit={(e) => {hideMarkers(mapMarkers); addMarkers(map, filteredMarkers, infowindow); e.preventDefault()}} >
           <input className='search-input' type='text' value={query} placeholder='Attraction location' onChange={this.updateQuery} />
           <input className='search-filter' type='submit' value='Filter' />
         </form>
-
         <ul>
           {filteredMapMarkers.map(mapMarker => (
             <li key={mapMarker.title} tabIndex='0' onClick={() => populateInfoWindow(mapMarker, infowindow, map)}
@@ -59,9 +53,7 @@ class ListLocations extends Component {
         </ul>
       </div>
     )
-
   }
-
 }
 
 export default ListLocations
