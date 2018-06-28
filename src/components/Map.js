@@ -31,6 +31,8 @@ class Map extends Component {
 
   addMarkers = (map, markers, infowindow) => {
 
+    const outerMap = this
+
     // Style the markers a bit. This will be our listing marker icon.
     const defaultIcon = this.makeMarkerIcon('0091ff')
 
@@ -47,6 +49,19 @@ class Map extends Component {
         icon: defaultIcon
       })
       mapMarkers.push(m)
+
+      // Create an onclick event to open the large infowindow at each marker.
+      m.addListener('click', function() {
+        outerMap.populateInfoWindow(m, infowindow)
+      })
+      // Two event listeners - one for mouseover, one for mouseout,
+      // to change the colors back and forth.
+      m.addListener('mouseover', function() {
+        this.setIcon(highlightedIcon)
+      })
+      m.addListener('mouseout', function() {
+        this.setIcon(defaultIcon)
+      })
 
     })
     this.setState({mapMarkers: mapMarkers, defaultIcon: defaultIcon, highlightedIcon: highlightedIcon})
@@ -204,6 +219,9 @@ function loadMapAsync(src) {
   s.type = 'text/javascript'
   s.async = true
   s.src = src
+  s.onerror = () => {
+    alert('Google Map API can not be loaded.')
+  }
   var x = document.getElementsByTagName('script')[0]
   x.parentNode.insertBefore(s, x)
 }
