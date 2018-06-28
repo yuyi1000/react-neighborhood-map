@@ -38,7 +38,7 @@ class ListLocations extends Component {
     return (
       <div className='list-locations'>
         <form className='search-form' onSubmit={(e) => {hideMarkers(mapMarkers); addMarkers(map, filteredMarkers, infowindow); e.preventDefault()}} >
-          <input className='search-input' type='text' value={query} placeholder='Attraction location' onChange={this.updateQuery} />
+          <input className='search-input' aria-label='search' type='text' value={query} placeholder='Attraction location' onChange={this.updateQuery} />
           <input className='search-filter' type='submit' value='Filter' />
         </form>
         <ul>
