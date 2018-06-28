@@ -92,7 +92,9 @@ class Map extends Component {
       const pages = data.query.pages
       extract = pages[Object.keys(pages)[0]].extract
       const firstParagraph = extract.slice(0, extract.indexOf('</p>') + '</p>'.length)
-      outerMap.fillInfoWindow(marker, infowindow, map, firstParagraph)
+      const pageLink = `<a href="https://en.wikipedia.org/wiki/${search}">For more information, visit ${search} on Wikipedia website</a>`
+
+      outerMap.fillInfoWindow(marker, infowindow, map, firstParagraph + pageLink)
     });
   }
 
