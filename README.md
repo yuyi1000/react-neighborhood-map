@@ -1,6 +1,6 @@
 # React Neighborhood map
 
-<img src='src/imgs/demo.png' alt='react neighborhood map' width='300px' />
+<img src='src/imgs/demo3.png' alt='react neighborhood map' width='300px' />
 
 This is a single page app that features a map with attractions in the neighborhood area. Implemented with [ReactJS framework](https://reactjs.org/), [Google Map API](https://cloud.google.com/maps-platform/), and [MediaWiki API](https://www.mediawiki.org/wiki/API:Main_page), it allows use to drag through the map and click on a blue marker of an attraction with ease. Run this app to find more!
 
